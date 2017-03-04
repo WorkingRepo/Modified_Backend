@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/kakhila/PlaySampleApp/Myapps/conf/routes
-// @DATE:Thu Feb 23 16:24:08 IST 2017
+// @DATE:Thu Mar 02 13:52:58 IST 2017
 
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
 import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamicString }
@@ -13,68 +13,68 @@ import _root_.play.libs.F
 // @LINE:6
 package controllers {
 
-  // @LINE:36
+  // @LINE:44
   class ReverseRestaurantController(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:42
+    // @LINE:50
     def getRestaurantById(id:Integer): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/getbyid/" + implicitly[PathBindable[Integer]].unbind("id", id))
     }
   
-    // @LINE:46
+    // @LINE:54
     def getRestaurantNearBy(lat:String, lon:String, dist:Integer): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/nearby/" + implicitly[PathBindable[String]].unbind("lat", dynamicString(lat)) + queryString(List(Some(implicitly[QueryStringBindable[String]].unbind("lon", lon)), Some(implicitly[QueryStringBindable[Integer]].unbind("dist", dist)))))
     }
   
-    // @LINE:44
+    // @LINE:52
     def getRestaurantByTime(): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/getbyTime")
     }
   
-    // @LINE:48
+    // @LINE:56
     def getRestaurantNearByRests(): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/nearbyrests")
     }
   
-    // @LINE:40
+    // @LINE:48
     def getRestaurantByName(name:String): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/getbyname/" + implicitly[PathBindable[String]].unbind("name", dynamicString(name)))
     }
   
-    // @LINE:50
+    // @LINE:58
     def createRestaurant(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "restsadd")
     }
   
-    // @LINE:36
+    // @LINE:44
     def getAllRestaurants(): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests")
     }
   
-    // @LINE:38
+    // @LINE:46
     def getByStreetName(stname:String): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/getbystname/" + implicitly[PathBindable[String]].unbind("stname", dynamicString(stname)))
     }
   
-    // @LINE:56
+    // @LINE:64
     def updateRestaurant(id:Integer): Call = {
       import ReverseRouteContext.empty
       Call("PUT", _prefix + { _defaultPrefix } + "rests/update/" + implicitly[PathBindable[Integer]].unbind("id", id))
     }
   
-    // @LINE:54
+    // @LINE:62
     def deleteRestaurantById(id:Integer): Call = {
       import ReverseRouteContext.empty
       Call("DELETE", _prefix + { _defaultPrefix } + "rests/delid/" + implicitly[PathBindable[Integer]].unbind("id", id))
@@ -104,7 +104,13 @@ package controllers {
     }
 
   
-    // @LINE:25
+    // @LINE:31
+    def validateAdmin(email:String, pwd:String): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "admins/validate/" + implicitly[PathBindable[String]].unbind("email", dynamicString(email)) + queryString(List(Some(implicitly[QueryStringBindable[String]].unbind("pwd", pwd)))))
+    }
+  
+    // @LINE:33
     def createAdmin(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "admins")
@@ -116,19 +122,13 @@ package controllers {
       Call("GET", _prefix + { _defaultPrefix } + "admins")
     }
   
-    // @LINE:27
+    // @LINE:35
     def deleteAdminById(email:String): Call = {
       import ReverseRouteContext.empty
       Call("DELETE", _prefix + { _defaultPrefix } + "admins/del/" + implicitly[PathBindable[String]].unbind("email", dynamicString(email)))
     }
   
     // @LINE:29
-    def updateAdminById(email:String): Call = {
-      import ReverseRouteContext.empty
-      Call("PUT", _prefix + { _defaultPrefix } + "admins/" + implicitly[PathBindable[String]].unbind("email", dynamicString(email)))
-    }
-  
-    // @LINE:23
     def getAdminById(email:String): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "admins/" + implicitly[PathBindable[String]].unbind("email", dynamicString(email)))
@@ -147,6 +147,33 @@ package controllers {
     def count(): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "count")
+    }
+  
+  }
+
+  // @LINE:71
+  class ReverseImageController(_prefix: => String) {
+    def _defaultPrefix: String = {
+      if (_prefix.endsWith("/")) "" else "/"
+    }
+
+  
+    // @LINE:73
+    def downloadImage(id:String): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "images/" + implicitly[PathBindable[String]].unbind("id", dynamicString(id)))
+    }
+  
+    // @LINE:75
+    def deleteImage(id:String): Call = {
+      import ReverseRouteContext.empty
+      Call("DELETE", _prefix + { _defaultPrefix } + "images/" + implicitly[PathBindable[String]].unbind("id", dynamicString(id)))
+    }
+  
+    // @LINE:71
+    def uploadImage(): Call = {
+      import ReverseRouteContext.empty
+      Call("POST", _prefix + { _defaultPrefix } + "images")
     }
   
   }

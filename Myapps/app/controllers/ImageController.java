@@ -1,7 +1,7 @@
 package controllers;
+
 import com.google.inject.Inject;
 import play.Logger;
-import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -11,16 +11,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 
-import static play.mvc.Controller.request;
-import static play.mvc.Results.*;
-
 /**
- * Created by Admin on 2/10/2017.
+ * Created by kakhila on 2/25/17.
  */
 public class ImageController extends Controller{
-
-
-
 
 
     private ImageStore imageStore;
@@ -29,6 +23,7 @@ public class ImageController extends Controller{
     public ImageController(ImageStore imageStore) {
         this.imageStore = imageStore;
     }
+
 
     public Result uploadImage() {
 
@@ -52,8 +47,9 @@ public class ImageController extends Controller{
             final String imageId = imageStore.storeImage(source);
             final String downloadUrl = routes.ImageController.downloadImage(imageId).absoluteURL(request());
             Logger.debug("Download url: {}", downloadUrl);
+            
 
-            return ok(Json.toJson(downloadUrl));
+            return ok(play.libs.Json.toJson(downloadUrl));
         } catch (IOException e) {
             e.printStackTrace();
             return internalServerError("Failed to store uploaded file");

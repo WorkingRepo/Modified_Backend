@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Time;
 
 @Entity
-public class Restaurants {
+public class Restaurants implements Comparable<Restaurants> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,11 +33,13 @@ public class Restaurants {
     private Time ctime;
     @Column
     private String image;
+    @Column
+    private Boolean Popular;
 
     public Restaurants() {
     }
 
-    public Restaurants(Integer id, String longitude, String latitude, String restName, String streetName, String address, String phone, String email, String homePage, String faceBook, Time otime, Time ctime, String image) {
+    public Restaurants(Integer id, String longitude, String latitude, String restName, String streetName, String address, String phone, String email, String homePage, String faceBook, Time otime, Time ctime, String image, Boolean popular) {
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -51,6 +53,15 @@ public class Restaurants {
         this.otime = otime;
         this.ctime = ctime;
         this.image = image;
+        Popular = popular;
+    }
+
+    public Boolean getPopular() {
+        return Popular;
+    }
+
+    public void setPopular(Boolean popular) {
+        Popular = popular;
     }
 
     public String getImage() { return image; }
@@ -151,5 +162,11 @@ public class Restaurants {
 
     public void setCtime(Time ctime) {
         this.ctime = ctime;
+    }
+
+    @Override
+    public int compareTo(Restaurants rests)
+    {
+        return RestName.compareToIgnoreCase(rests.RestName);
     }
 }

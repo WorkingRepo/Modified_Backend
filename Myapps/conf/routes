@@ -20,13 +20,21 @@ GET     /hello                      controllers.HelloWorldController.hello()
 
 GET     /admins  controllers.AdminController.getAllAdmins()
 
+#GET     /admins/md5/:pwd  controllers.AdminController.md5(pwd:String)
+
+#GET     /admins/sha256/:pwd  controllers.AdminController.sha256(pwd:String)
+
+#GET     /admins/token/:email  controllers.AdminController.getToken(email:String, pwd:String)
+
 GET     /admins/:email  controllers.AdminController.getAdminById(email:String)
+
+GET     /admins/validate/:email  controllers.AdminController.validateAdmin(email:String, pwd:String)
 
 POST    /admins controllers.AdminController.createAdmin()
 
 DELETE  /admins/del/:email  controllers.AdminController.deleteAdminById(email:String)
 
-PUT     /admins/:email  controllers.AdminController.updateAdminById(email:String)
+#PUT     /admins/:email  controllers.AdminController.updateAdminById(email:String, pwd:String, salt:String)
 
 
 
@@ -43,13 +51,13 @@ GET     /rests/getbyid/:id  controllers.RestaurantController.getRestaurantById(i
 
 GET     /rests/getbyTime  controllers.RestaurantController.getRestaurantByTime()
 
-GET     /rests/nearby/:lat     controllers.RestaurantController.getRestaurantNearBy(lat:String, lon:String,dist:Integer)
+GET     /rests/nearby/:lat     controllers.RestaurantController.getRestaurantNearBy(lat:String, lon:String, dist:Integer)
 
 GET     /rests/nearbyrests     controllers.RestaurantController.getRestaurantNearByRests()
 
 POST    /restsadd controllers.RestaurantController.createRestaurant()
 
-#DELETE  /rests/del/:resname controllers.RestaurantController.deleteRestaurant(resname:String,stname:String)
+#DELETE  /rests/del/:resname controllers.RestaurantController.deleteRestaurant(resname:String, stname:String)
 
 DELETE  /rests/delid/:id controllers.RestaurantController.deleteRestaurantById(id:Integer)
 
@@ -61,5 +69,7 @@ PUT     /rests/update/:id  controllers.RestaurantController.updateRestaurant(id:
 # Image controller
 
 POST /images                                            controllers.ImageController.uploadImage()
+
 GET /images/:id                                         controllers.ImageController.downloadImage(id: String)
+
 DELETE /images/:id                                      controllers.ImageController.deleteImage(id: String)

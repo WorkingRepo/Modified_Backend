@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/kakhila/PlaySampleApp/Myapps/conf/routes
-// @DATE:Thu Feb 23 16:24:08 IST 2017
+// @DATE:Thu Mar 02 13:52:58 IST 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -15,7 +15,7 @@ import _root_.play.libs.F
 package controllers.javascript {
   import ReverseRouteContext.empty
 
-  // @LINE:36
+  // @LINE:44
   class ReverseRestaurantController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -23,7 +23,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:42
+    // @LINE:50
     def getRestaurantById: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getRestaurantById",
       """
@@ -33,7 +33,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:46
+    // @LINE:54
     def getRestaurantNearBy: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getRestaurantNearBy",
       """
@@ -43,7 +43,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:44
+    // @LINE:52
     def getRestaurantByTime: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getRestaurantByTime",
       """
@@ -53,7 +53,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:48
+    // @LINE:56
     def getRestaurantNearByRests: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getRestaurantNearByRests",
       """
@@ -63,7 +63,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:40
+    // @LINE:48
     def getRestaurantByName: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getRestaurantByName",
       """
@@ -73,7 +73,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:50
+    // @LINE:58
     def createRestaurant: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.createRestaurant",
       """
@@ -83,7 +83,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:36
+    // @LINE:44
     def getAllRestaurants: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getAllRestaurants",
       """
@@ -93,7 +93,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:38
+    // @LINE:46
     def getByStreetName: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getByStreetName",
       """
@@ -103,7 +103,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:56
+    // @LINE:64
     def updateRestaurant: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.updateRestaurant",
       """
@@ -113,7 +113,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:54
+    // @LINE:62
     def deleteRestaurantById: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.deleteRestaurantById",
       """
@@ -153,7 +153,17 @@ package controllers.javascript {
     }
 
   
-    // @LINE:25
+    // @LINE:31
+    def validateAdmin: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.AdminController.validateAdmin",
+      """
+        function(email0,pwd1) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "admins/validate/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("email", encodeURIComponent(email0)) + _qS([(""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("pwd", pwd1)])})
+        }
+      """
+    )
+  
+    // @LINE:33
     def createAdmin: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.AdminController.createAdmin",
       """
@@ -173,7 +183,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:27
+    // @LINE:35
     def deleteAdminById: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.AdminController.deleteAdminById",
       """
@@ -184,16 +194,6 @@ package controllers.javascript {
     )
   
     // @LINE:29
-    def updateAdminById: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.AdminController.updateAdminById",
-      """
-        function(email0) {
-          return _wA({method:"PUT", url:"""" + _prefix + { _defaultPrefix } + """" + "admins/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("email", encodeURIComponent(email0))})
-        }
-      """
-    )
-  
-    // @LINE:23
     def getAdminById: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.AdminController.getAdminById",
       """
@@ -219,6 +219,46 @@ package controllers.javascript {
       """
         function() {
           return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "count"})
+        }
+      """
+    )
+  
+  }
+
+  // @LINE:71
+  class ReverseImageController(_prefix: => String) {
+
+    def _defaultPrefix: String = {
+      if (_prefix.endsWith("/")) "" else "/"
+    }
+
+  
+    // @LINE:73
+    def downloadImage: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ImageController.downloadImage",
+      """
+        function(id0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "images/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("id", encodeURIComponent(id0))})
+        }
+      """
+    )
+  
+    // @LINE:75
+    def deleteImage: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ImageController.deleteImage",
+      """
+        function(id0) {
+          return _wA({method:"DELETE", url:"""" + _prefix + { _defaultPrefix } + """" + "images/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("id", encodeURIComponent(id0))})
+        }
+      """
+    )
+  
+    // @LINE:71
+    def uploadImage: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ImageController.uploadImage",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "images"})
         }
       """
     )
