@@ -1,0 +1,79 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing a sample home page
+GET     /                           controllers.HomeController.index
+# An example controller showing how to use dependency injection
+GET     /count                      controllers.CountController.count
+# An example controller showing how to write asynchronous code
+GET     /message                    controllers.AsyncController.message
+
+# Map static resources0. from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET     /hello                      controllers.HelloWorldController.hello()
+
+
+
+#Admins
+
+GET     /admins  controllers.AdminController.getAllAdmins()
+
+#GET     /admins/md5/:pwd  controllers.AdminController.md5(pwd:String)
+
+#GET     /admins/sha256/:pwd  controllers.AdminController.sha256(pwd:String)
+
+#GET     /admins/token/:email  controllers.AdminController.getToken(email:String, pwd:String)
+
+GET     /admins/:email  controllers.AdminController.getAdminById(email:String)
+
+GET     /admins/validate/:email  controllers.AdminController.validateAdmin(email:String, pwd:String)
+
+POST    /admins controllers.AdminController.createAdmin()
+
+DELETE  /admins/del/:email  controllers.AdminController.deleteAdminById(email:String)
+
+#PUT     /admins/:email  controllers.AdminController.updateAdminById(email:String, pwd:String, salt:String)
+
+
+
+
+#Restaurants
+
+GET     /rests  controllers.RestaurantController.getAllRestaurants()
+
+GET     /rests/getbystname/:stname  controllers.RestaurantController.getByStreetName(stname:String)
+
+GET     /rests/getbyname/:name  controllers.RestaurantController.getRestaurantByName(name:String)
+
+GET     /rests/getbyid/:id  controllers.RestaurantController.getRestaurantById(id:Integer)
+
+GET     /rests/getbyTime  controllers.RestaurantController.getRestaurantByTime()
+
+GET     /rests/nearby/:lat     controllers.RestaurantController.getRestaurantNearBy(lat:String, lon:String, dist:Integer)
+
+#GET     /rests/open     controllers.RestaurantController.getOpen()
+
+#GET     /rests/nearbyrests     controllers.RestaurantController.getRestaurantNearByRests()
+
+GET     /rests/popular     controllers.RestaurantController.getByPopular()
+
+POST    /restsadd controllers.RestaurantController.createRestaurant()
+
+#DELETE  /rests/del/:resname controllers.RestaurantController.deleteRestaurant(resname:String, stname:String)
+
+DELETE  /rests/delid/:id controllers.RestaurantController.deleteRestaurantById(id:Integer)
+
+PUT     /rests/update/:id  controllers.RestaurantController.updateRestaurant(id:Integer)
+
+
+
+
+# Image controller
+
+POST /images                                            controllers.ImageController.uploadImage()
+
+GET /images/:id                                         controllers.ImageController.downloadImage(id: String)
+
+DELETE /images/:id                                      controllers.ImageController.deleteImage(id: String)
