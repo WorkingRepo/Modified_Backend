@@ -8,38 +8,48 @@ public class Restaurants implements Comparable<Restaurants> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer id;//0
     @Column
-    private  String longitude;
+    private  String longitude;//1
     @Column
-    private String latitude;
+    private String latitude;//2
     @Column
-    private String RestName;
+    private String RestName;//3
     @Column
-    private String StreetName;
+    private String StreetName;//4
     @Column
-    private String Address;
+    private String Address;//5
     @Column
-    private String Phone;
+    private String Phone;//6
     @Column
-    private String Email;
+    private String Email;//7
     @Column
-    private String HomePage;
+    private String HomePage;//8
     @Column
-    private String FaceBook;
+    private String FaceBook;//9
     @Column
-    private Time otime;
+    private Time otime;//10
     @Column
-    private Time ctime;
+    private Time ctime;//11
     @Column
-    private String image;
+    private String image;//12
     @Column
-    private Boolean Popular;
+    private Boolean Popular;//13
+    @Column
+    private String Description;//14
+    @Column
+    private String Highlights;//15
+    @Column
+    private String Cuisines;//16
+    @Column
+    private String open ;//17
+    @Column
+    private Integer Cost ;//18
 
     public Restaurants() {
     }
 
-    public Restaurants(Integer id, String longitude, String latitude, String restName, String streetName, String address, String phone, String email, String homePage, String faceBook, Time otime, Time ctime, String image, Boolean popular) {
+    public Restaurants(Integer id, String longitude, String latitude, String restName, String streetName, String address, String phone, String email, String homePage, String faceBook, Time otime, Time ctime, String image, Boolean popular, String description, String highlights, String cuisines, String open, Integer cost) {
         this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -54,6 +64,51 @@ public class Restaurants implements Comparable<Restaurants> {
         this.ctime = ctime;
         this.image = image;
         Popular = popular;
+        Description = description;
+        Highlights = highlights;
+        Cuisines = cuisines;
+        this.open = open;
+        Cost = cost;
+    }
+
+    public Integer getCost() {
+        return Cost;
+    }
+
+    public void setCost(Integer cost) {
+        Cost = cost;
+    }
+
+    public String getHighlights() {
+        return Highlights;
+    }
+
+    public void setHighlights(String highlights) {
+        Highlights = highlights;
+    }
+
+    public String getCuisines() {
+        return Cuisines;
+    }
+
+    public void setCuisines(String cuisines) {
+        Cuisines = cuisines;
+    }
+
+    public String getOpen() {
+        return open;
+    }
+
+    public void setOpen(String open) {
+        this.open = open;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
     }
 
     public Boolean getPopular() {
@@ -169,4 +224,6 @@ public class Restaurants implements Comparable<Restaurants> {
     {
         return RestName.compareToIgnoreCase(rests.RestName);
     }
+
+
 }

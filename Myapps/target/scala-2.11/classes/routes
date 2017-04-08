@@ -38,22 +38,37 @@ DELETE  /admins/del/:email  controllers.AdminController.deleteAdminById(email:St
 
 
 
-
 #Restaurants
 
 GET     /rests  controllers.RestaurantController.getAllRestaurants()
 
 GET     /rests/getbystname/:stname  controllers.RestaurantController.getByStreetName(stname:String)
 
+GET     /rests/getbypstname/:stname  controllers.RestaurantController.getByPopularStreetName(stname:String)
+
 GET     /rests/getbyname/:name  controllers.RestaurantController.getRestaurantByName(name:String)
+
+GET     /rests/getbycuisine/:cuisine  controllers.RestaurantController.getByCuisines(cuisine:String)
 
 GET     /rests/getbyid/:id  controllers.RestaurantController.getRestaurantById(id:Integer)
 
 GET     /rests/getbyTime  controllers.RestaurantController.getRestaurantByTime()
 
+GET     /rests/getbylow  controllers.RestaurantController.getRestaurantByLowPrice()
+
+GET     /rests/getbymoderate  controllers.RestaurantController.getRestaurantByModeratePrice()
+
+GET     /rests/getbyhigh  controllers.RestaurantController.getRestaurantByHighPrice()
+
 GET     /rests/nearby/:lat     controllers.RestaurantController.getRestaurantNearBy(lat:String, lon:String, dist:Integer)
 
-GET     /rests/nearbyrests     controllers.RestaurantController.getRestaurantNearByRests()
+GET     /rests/pnearby/:lat     controllers.RestaurantController.getByPopularNearBy(lat:String, lon:String, dist:Integer)
+
+#GET     /rests/open     controllers.RestaurantController.getOpen()
+
+GET     /rests/popular     controllers.RestaurantController.getByPopular()
+
+GET     /rests/recent     controllers.RestaurantController.getRecent()
 
 POST    /restsadd controllers.RestaurantController.createRestaurant()
 
@@ -66,6 +81,8 @@ PUT     /rests/update/:id  controllers.RestaurantController.updateRestaurant(id:
 
 
 
+
+
 # Image controller
 
 POST /images                                            controllers.ImageController.uploadImage()
@@ -73,3 +90,12 @@ POST /images                                            controllers.ImageControl
 GET /images/:id                                         controllers.ImageController.downloadImage(id: String)
 
 DELETE /images/:id                                      controllers.ImageController.deleteImage(id: String)
+
+
+#Suggestions
+
+GET     /suggest  controllers.SuggestionBox.getAllSuggestions()
+
+POST     /suggest  controllers.SuggestionBox.createSuggestion()
+
+DELETE    /suggestdel/:id  controllers.SuggestionBox.deleteSuggestionById(id: Integer)

@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/kakhila/PlaySampleApp/Myapps/conf/routes
-// @DATE:Thu Mar 02 13:52:58 IST 2017
+// @DATE:Wed Mar 22 16:27:35 IST 2017
 
 
 package router {

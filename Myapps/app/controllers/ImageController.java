@@ -47,7 +47,7 @@ public class ImageController extends Controller{
             final String imageId = imageStore.storeImage(source);
             final String downloadUrl = routes.ImageController.downloadImage(imageId).absoluteURL(request());
             Logger.debug("Download url: {}", downloadUrl);
-            
+
 
             return ok(play.libs.Json.toJson(downloadUrl));
         } catch (IOException e) {

@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/kakhila/PlaySampleApp/Myapps/conf/routes
-// @DATE:Thu Mar 02 13:52:58 IST 2017
+// @DATE:Wed Mar 22 16:27:35 IST 2017
 
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
 import play.core.routing.{ HandlerDef, ReverseRouteContext, queryString, dynamicString }
@@ -13,68 +13,110 @@ import _root_.play.libs.F
 // @LINE:6
 package controllers {
 
-  // @LINE:44
+  // @LINE:43
   class ReverseRestaurantController(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:50
+    // @LINE:71
+    def getRecent(): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "rests/recent")
+    }
+  
+    // @LINE:53
     def getRestaurantById(id:Integer): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/getbyid/" + implicitly[PathBindable[Integer]].unbind("id", id))
     }
   
-    // @LINE:54
+    // @LINE:47
+    def getByPopularStreetName(stname:String): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "rests/getbypstname/" + implicitly[PathBindable[String]].unbind("stname", dynamicString(stname)))
+    }
+  
+    // @LINE:59
+    def getRestaurantByModeratePrice(): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "rests/getbymoderate")
+    }
+  
+    // @LINE:63
     def getRestaurantNearBy(lat:String, lon:String, dist:Integer): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/nearby/" + implicitly[PathBindable[String]].unbind("lat", dynamicString(lat)) + queryString(List(Some(implicitly[QueryStringBindable[String]].unbind("lon", lon)), Some(implicitly[QueryStringBindable[Integer]].unbind("dist", dist)))))
     }
   
-    // @LINE:52
+    // @LINE:55
     def getRestaurantByTime(): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/getbyTime")
     }
   
-    // @LINE:56
-    def getRestaurantNearByRests(): Call = {
+    // @LINE:57
+    def getRestaurantByLowPrice(): Call = {
       import ReverseRouteContext.empty
-      Call("GET", _prefix + { _defaultPrefix } + "rests/nearbyrests")
+      Call("GET", _prefix + { _defaultPrefix } + "rests/getbylow")
     }
   
-    // @LINE:48
+    // @LINE:65
+    def getByPopularNearBy(lat:String, lon:String, dist:Integer): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "rests/pnearby/" + implicitly[PathBindable[String]].unbind("lat", dynamicString(lat)) + queryString(List(Some(implicitly[QueryStringBindable[String]].unbind("lon", lon)), Some(implicitly[QueryStringBindable[Integer]].unbind("dist", dist)))))
+    }
+  
+    // @LINE:51
+    def getByCuisines(cuisine:String): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "rests/getbycuisine/" + implicitly[PathBindable[String]].unbind("cuisine", dynamicString(cuisine)))
+    }
+  
+    // @LINE:49
     def getRestaurantByName(name:String): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/getbyname/" + implicitly[PathBindable[String]].unbind("name", dynamicString(name)))
     }
   
-    // @LINE:58
+    // @LINE:73
     def createRestaurant(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "restsadd")
     }
   
-    // @LINE:44
+    // @LINE:43
     def getAllRestaurants(): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests")
     }
   
-    // @LINE:46
+    // @LINE:69
+    def getByPopular(): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "rests/popular")
+    }
+  
+    // @LINE:45
     def getByStreetName(stname:String): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "rests/getbystname/" + implicitly[PathBindable[String]].unbind("stname", dynamicString(stname)))
     }
   
-    // @LINE:64
+    // @LINE:79
     def updateRestaurant(id:Integer): Call = {
       import ReverseRouteContext.empty
       Call("PUT", _prefix + { _defaultPrefix } + "rests/update/" + implicitly[PathBindable[Integer]].unbind("id", id))
     }
   
-    // @LINE:62
+    // @LINE:61
+    def getRestaurantByHighPrice(): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "rests/getbyhigh")
+    }
+  
+    // @LINE:77
     def deleteRestaurantById(id:Integer): Call = {
       import ReverseRouteContext.empty
       Call("DELETE", _prefix + { _defaultPrefix } + "rests/delid/" + implicitly[PathBindable[Integer]].unbind("id", id))
@@ -93,6 +135,33 @@ package controllers {
     def versioned(file:Asset): Call = {
       implicit val _rrc = new ReverseRouteContext(Map(("path", "/public")))
       Call("GET", _prefix + { _defaultPrefix } + "assets/" + implicitly[PathBindable[Asset]].unbind("file", file))
+    }
+  
+  }
+
+  // @LINE:97
+  class ReverseSuggestionBox(_prefix: => String) {
+    def _defaultPrefix: String = {
+      if (_prefix.endsWith("/")) "" else "/"
+    }
+
+  
+    // @LINE:99
+    def createSuggestion(): Call = {
+      import ReverseRouteContext.empty
+      Call("POST", _prefix + { _defaultPrefix } + "suggest")
+    }
+  
+    // @LINE:101
+    def deleteSuggestionById(id:Integer): Call = {
+      import ReverseRouteContext.empty
+      Call("DELETE", _prefix + { _defaultPrefix } + "suggestdel/" + implicitly[PathBindable[Integer]].unbind("id", id))
+    }
+  
+    // @LINE:97
+    def getAllSuggestions(): Call = {
+      import ReverseRouteContext.empty
+      Call("GET", _prefix + { _defaultPrefix } + "suggest")
     }
   
   }
@@ -151,26 +220,26 @@ package controllers {
   
   }
 
-  // @LINE:71
+  // @LINE:88
   class ReverseImageController(_prefix: => String) {
     def _defaultPrefix: String = {
       if (_prefix.endsWith("/")) "" else "/"
     }
 
   
-    // @LINE:73
+    // @LINE:90
     def downloadImage(id:String): Call = {
       import ReverseRouteContext.empty
       Call("GET", _prefix + { _defaultPrefix } + "images/" + implicitly[PathBindable[String]].unbind("id", dynamicString(id)))
     }
   
-    // @LINE:75
+    // @LINE:92
     def deleteImage(id:String): Call = {
       import ReverseRouteContext.empty
       Call("DELETE", _prefix + { _defaultPrefix } + "images/" + implicitly[PathBindable[String]].unbind("id", dynamicString(id)))
     }
   
-    // @LINE:71
+    // @LINE:88
     def uploadImage(): Call = {
       import ReverseRouteContext.empty
       Call("POST", _prefix + { _defaultPrefix } + "images")

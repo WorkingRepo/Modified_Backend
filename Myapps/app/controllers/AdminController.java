@@ -8,8 +8,8 @@ import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-
 import javax.persistence.TypedQuery;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -25,6 +25,7 @@ public class AdminController extends Controller {
     public AdminController(JPAApi jpaApi) {
         this.jpaApi = jpaApi;
     }
+
     @Transactional
     public Result getAllAdmins(){
         TypedQuery<Admins> query=jpaApi.em().createQuery("select a from Admins a", Admins.class);
@@ -49,6 +50,7 @@ public class AdminController extends Controller {
         updateAdminById(email,pwd,salt);
         return created();
     }
+
     @Transactional
     public Result validateAdmin(String email, String pwd) throws NoSuchAlgorithmException {
 
@@ -172,19 +174,22 @@ public class AdminController extends Controller {
         }
         return hexString.toString();
     }
-    public String salt(){
-
+    public String salt() throws NoSuchAlgorithmException {
         Random ranGen = new SecureRandom();
         byte[] aesKey = new byte[16];
         ranGen.nextBytes(aesKey);
        return aesKey.toString() ;
+
     }
 
-    public String authToken(){
+    public String authToken() throws NoSuchAlgorithmException {
 
         Random ranGen = new SecureRandom();
-        byte[] aesKey = new byte[64];
-        ranGen.nextBytes(aesKey);
-        return aesKey.toString() ;
+        byte[] msg = new byte[40];
+        ranGen.nextBytes(msg);
+        MessageDigest sha = MessageDigest.getInstance("SHA-256");
+        sha.reset();
+        byte[] digest = sha.digest(msg);
+        return (String.format("%0" + (digest.length<<1) + "x" , new BigInteger(1,digest)).substring(0,64));
     }
 }

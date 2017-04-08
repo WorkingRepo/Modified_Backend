@@ -2,5 +2,7 @@
 [0m[[0mdebug[0m] [0m	(/Users/kakhila/PlaySampleApp/Myapps/conf/application.conf,/Users/kakhila/PlaySampleApp/Myapps/target/scala-2.11/classes/application.conf)[0m
 [0m[[0mdebug[0m] [0m	(/Users/kakhila/PlaySampleApp/Myapps/conf/logback.xml,/Users/kakhila/PlaySampleApp/Myapps/target/scala-2.11/classes/logback.xml)[0m
 [0m[[0mdebug[0m] [0m	(/Users/kakhila/PlaySampleApp/Myapps/conf/META-INF,/Users/kakhila/PlaySampleApp/Myapps/target/scala-2.11/classes/META-INF)[0m
+[0m[[0mdebug[0m] [0m	(/Users/kakhila/PlaySampleApp/Myapps/conf/play,/Users/kakhila/PlaySampleApp/Myapps/target/scala-2.11/classes/play)[0m
+[0m[[0mdebug[0m] [0m	(/Users/kakhila/PlaySampleApp/Myapps/conf/play.plugins,/Users/kakhila/PlaySampleApp/Myapps/target/scala-2.11/classes/play.plugins)[0m
 [0m[[0mdebug[0m] [0m	(/Users/kakhila/PlaySampleApp/Myapps/conf/routes,/Users/kakhila/PlaySampleApp/Myapps/target/scala-2.11/classes/routes)[0m
 [0m[[0mdebug[0m] [0m	(/Users/kakhila/PlaySampleApp/Myapps/conf/META-INF/persistence.xml,/Users/kakhila/PlaySampleApp/Myapps/target/scala-2.11/classes/META-INF/persistence.xml)[0m

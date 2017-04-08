@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import models.Admins;
 import models.Restaurants;
 import play.Logger;
+
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -16,10 +17,13 @@ import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 
+
 public class RestaurantController extends Controller {
     private JPAApi jpaApi;
 
     private List<Restaurants> rests;
+
+
 
 
     @Inject
@@ -28,11 +32,14 @@ public class RestaurantController extends Controller {
     }
 
 
+
+
     @Transactional
     public Result getAllRestaurants() {
 
             TypedQuery<Restaurants> query = jpaApi.em().createQuery("select r from Restaurants r", Restaurants.class);
             rests = query.getResultList();
+            getOpen();
             Collections.sort(rests);
             JsonNode json = Json.toJson(rests);
             return ok(json);
@@ -41,9 +48,11 @@ public class RestaurantController extends Controller {
     @Transactional
     public Result getByStreetName(String stname) {
 
-            String q = "select r from Restaurants r  where StreetName LIKE :stname ";
-            TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class).setParameter("stname", stname + '%');
+            String q = "select r from Restaurants r  where StreetName LIKE :stname";
+            TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class).setParameter("stname", '%' + stname + '%');
             rests = query.getResultList();
+            getOpen();
+            Collections.sort(rests);
             final JsonNode json = Json.toJson(rests);
             return ok(json);
 
@@ -54,8 +63,103 @@ public class RestaurantController extends Controller {
 
             TypedQuery<Restaurants> query = jpaApi.em().createQuery("SELECT r FROM Restaurants r where CURTIME()>otime and CURTIME()<ctime", Restaurants.class);
             List<Restaurants> restaurants = query.getResultList();
+            getOpen();
+            Collections.sort(restaurants);
             JsonNode json = Json.toJson(restaurants);
             return ok(json);
+
+    }
+
+    @Transactional
+    public Result getByCuisines(String cuisine) {
+
+        String q = "select r from Restaurants r  where Cuisines LIKE :cuisine";
+        TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class).setParameter("cuisine", '%' + cuisine + '%');
+        rests = query.getResultList();
+        getOpen();
+        Collections.sort(rests);
+        JsonNode json = Json.toJson(rests);
+        return ok(json);
+    }
+
+
+    @Transactional
+    public void getOpen() {
+
+        TypedQuery<Restaurants> query = jpaApi.em().createQuery("SELECT r FROM Restaurants r where CURTIME()>otime and CURTIME()<ctime", Restaurants.class);
+        List<Restaurants> restaurants = query.getResultList();
+
+        for(Restaurants rest:restaurants){
+           final Restaurants rest2 = jpaApi.em().find(Restaurants.class,rest.getId() );
+            rest2.setOpen("Open Now");
+            //Logger.debug(String.valueOf(rest2));
+            jpaApi.em().merge(rest2);
+        }
+        TypedQuery<Restaurants> query1 = jpaApi.em().createQuery("SELECT r FROM Restaurants r where CURTIME()<=otime and CURTIME()>=ctime", Restaurants.class);
+        List<Restaurants> restaurants1 = query1.getResultList();
+        for(Restaurants rest:restaurants1){
+            final Restaurants rest2 = jpaApi.em().find(Restaurants.class,rest.getId() );
+            rest2.setOpen("Closed");
+            //Logger.debug(String.valueOf(rest2));
+            jpaApi.em().merge(rest2);
+        }
+
+    }
+
+
+
+    @Transactional
+    public Result getRecent() {
+
+        String q = "select r from Restaurants r ORDER BY r.id DESC";
+        TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class);
+        rests = query.setMaxResults(10).getResultList();
+        final JsonNode json = Json.toJson(rests);
+        return ok(json);
+    }
+
+    // ORDER BY r.id DESC LIMIT 6
+    @Transactional
+    public Result getByPopular() {
+
+        String q = "select r from Restaurants r  where Popular = true ORDER BY r.id DESC";
+        TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class);
+        rests = query.setMaxResults(6).getResultList();
+        final JsonNode json = Json.toJson(rests);
+        return ok(json);
+    }
+
+    @Transactional
+    public Result getByPopularStreetName(String stname) {
+
+        String q = "select r from Restaurants r  where Popular = true and StreetName LIKE :stname ORDER BY r.id DESC";
+        TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class).setParameter("stname", stname + '%');
+        rests = query.setMaxResults(6).getResultList();
+        final JsonNode json = Json.toJson(rests);
+        return ok(json);
+    }
+
+    @Transactional
+    public Result getByPopularNearBy(String lat, String lon ,Integer dist) {
+        Integer i;
+        Restaurants rest = null;
+        String q= "SELECT id,longitude, latitude, RestName, StreetName, Address, Phone, Email, HomePage, FaceBook, otime, ctime, image, Popular, Description, Highlights, Cuisines, open, \n" +
+                "      111.045* DEGREES(ACOS(COS(RADIANS(latpoint))\n" +
+                "                 * COS(RADIANS(latitude))\n" +
+                "                 * COS(RADIANS(longpoint) - RADIANS(longitude))\n" +
+                "                 + SIN(RADIANS(latpoint))\n" +
+                "                 * SIN(RADIANS(latitude)))) AS distance_in_km\n" +
+                " FROM Restaurants \n" +
+                " JOIN (\n" +
+                "     SELECT " + lat + " AS latpoint, " + lon + " AS longpoint\n" +
+                "   ) AS p ON 1=1\n" +
+                "HAVING distance_in_km <= " + dist + " and Popular=true ORDER BY distance_in_km\n" ;
+
+        Query query=jpaApi.em().createNativeQuery(q);
+        List<Object[]> restaurants =query.setMaxResults(6).getResultList();
+        JsonNode json = Json.toJson(restaurants);
+        return ok(json);
+
 
     }
 
@@ -70,6 +174,8 @@ public class RestaurantController extends Controller {
         if(200 == auth.status()) {
             final JsonNode json = request().body().asJson();
             final Restaurants rests = Json.fromJson(json, Restaurants.class);
+            rests.setOpen("Closed");
+
             jpaApi.em().persist(rests);
             return created();
         }
@@ -107,6 +213,7 @@ public class RestaurantController extends Controller {
     @Transactional
     public Result getRestaurantById(Integer id) {
             final Restaurants rest = jpaApi.em().find(Restaurants.class, id);
+            getOpen();
             JsonNode json = Json.toJson(rest);
             return ok(json);
     }
@@ -123,7 +230,11 @@ public class RestaurantController extends Controller {
                 return notFound("restaurant not found");
             }
             jpaApi.em().remove(rest);
-            return ok("deleted");
+            TypedQuery<Restaurants> query = jpaApi.em().createQuery("select r from Restaurants r", Restaurants.class);
+            rests = query.getResultList();
+            Collections.sort(rests);
+            JsonNode json = Json.toJson(rests);
+            return ok(json);
         }
         return unauthorized("unauthorized user");
     }
@@ -134,10 +245,41 @@ public class RestaurantController extends Controller {
         String q = "select r from Restaurants r  where RestName LIKE :name ";
         TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class).setParameter("name", '%' + name + '%');
         rests = query.getResultList();
+        getOpen();
         final JsonNode json = Json.toJson(rests);
         return ok(json);
     }
 
+
+    @Transactional
+    public Result getRestaurantByLowPrice() {
+        String q = "select r from Restaurants r  where cost < 500 order by cost";
+        TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class);
+        rests = query.getResultList();
+        getOpen();
+        final JsonNode json = Json.toJson(rests);
+        return ok(json);
+    }
+
+    @Transactional
+    public Result getRestaurantByModeratePrice() {
+        String q = "select r from Restaurants r  where cost >= 500 and cost <= 1000 order by cost";
+        TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class);
+        rests = query.getResultList();
+        getOpen();
+        final JsonNode json = Json.toJson(rests);
+        return ok(json);
+    }
+
+    @Transactional
+    public Result getRestaurantByHighPrice() {
+        String q = "select r from Restaurants r  where cost >= 1000 order by cost";
+        TypedQuery<Restaurants> query = jpaApi.em().createQuery(q, Restaurants.class);
+        rests = query.getResultList();
+        getOpen();
+        final JsonNode json = Json.toJson(rests);
+        return ok(json);
+    }
 
     @Transactional
     public Result updateRestaurant(Integer id) {
@@ -163,7 +305,7 @@ public class RestaurantController extends Controller {
 
         Integer i;
         Restaurants rest = null;
-        String q= "SELECT id,longitude, latitude, RestName, StreetName, Address, Phone, Email, HomePage, FaceBook, otime, ctime,\n" +
+        String q= "SELECT id,longitude, latitude, RestName, StreetName, Address, Phone, Email, HomePage, FaceBook, otime, ctime, image, Popular, Description, Highlights, Cuisines, open, Cost, \n" +
                 "      111.045* DEGREES(ACOS(COS(RADIANS(latpoint))\n" +
                 "                 * COS(RADIANS(latitude))\n" +
                 "                 * COS(RADIANS(longpoint) - RADIANS(longitude))\n" +
@@ -177,18 +319,11 @@ public class RestaurantController extends Controller {
 
         Query query=jpaApi.em().createNativeQuery(q);
         List<Object[]> restaurants =query.getResultList();
-        
-       /* for(i = 0;i<restaurants.size();i++){
-            Integer id = (Integer) restaurants.get(i)[0];
-            rest = jpaApi.em().find(Restaurants.class, id);
-           
-        }
-        */
         JsonNode json = Json.toJson(restaurants);
         return ok(json);
     }
 
-
+/*
 
     @Transactional
     public Result getRestaurantNearByRests(){
@@ -202,6 +337,7 @@ public class RestaurantController extends Controller {
         return ok(json);
 
     }
+    */
 
     public Result auth(String token, String id) {
         final Admins admins = jpaApi.em().find(Admins.class, id);

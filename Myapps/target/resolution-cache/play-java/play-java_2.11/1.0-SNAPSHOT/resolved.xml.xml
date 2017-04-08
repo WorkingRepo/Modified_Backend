@@ -4,7 +4,7 @@
 		module="play-java_2.11"
 		revision="1.0-SNAPSHOT"
 		status="integration"
-		publication="20170304092207"
+		publication="20170404092358"
 	>
 		<description>
 		play-java
@@ -49,5 +49,6 @@
 		<dependency org="com.typesafe.play" name="play-java-jpa_2.11" rev="2.5.10" conf="compile->default(compile)"/>
 		<dependency org="org.hibernate" name="hibernate-entitymanager" rev="5.1.0.Final" conf="compile->default(compile)"/>
 		<dependency org="mysql" name="mysql-connector-java" rev="5.1.36" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play.plugins" name="play-plugins-mailer_2.11" rev="2.3.1" conf="compile->default(compile)"/>
 	</dependencies>
 </ivy-module>

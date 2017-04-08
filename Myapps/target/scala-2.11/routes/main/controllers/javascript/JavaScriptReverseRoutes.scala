@@ -1,7 +1,7 @@
 
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/kakhila/PlaySampleApp/Myapps/conf/routes
-// @DATE:Thu Mar 02 13:52:58 IST 2017
+// @DATE:Wed Mar 22 16:27:35 IST 2017
 
 import play.api.routing.JavaScriptReverseRoute
 import play.api.mvc.{ QueryStringBindable, PathBindable, Call, JavascriptLiteral }
@@ -15,7 +15,7 @@ import _root_.play.libs.F
 package controllers.javascript {
   import ReverseRouteContext.empty
 
-  // @LINE:44
+  // @LINE:43
   class ReverseRestaurantController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -23,7 +23,17 @@ package controllers.javascript {
     }
 
   
-    // @LINE:50
+    // @LINE:71
+    def getRecent: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RestaurantController.getRecent",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "rests/recent"})
+        }
+      """
+    )
+  
+    // @LINE:53
     def getRestaurantById: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getRestaurantById",
       """
@@ -33,7 +43,27 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:54
+    // @LINE:47
+    def getByPopularStreetName: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RestaurantController.getByPopularStreetName",
+      """
+        function(stname0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "rests/getbypstname/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("stname", encodeURIComponent(stname0))})
+        }
+      """
+    )
+  
+    // @LINE:59
+    def getRestaurantByModeratePrice: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RestaurantController.getRestaurantByModeratePrice",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "rests/getbymoderate"})
+        }
+      """
+    )
+  
+    // @LINE:63
     def getRestaurantNearBy: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getRestaurantNearBy",
       """
@@ -43,7 +73,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:52
+    // @LINE:55
     def getRestaurantByTime: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getRestaurantByTime",
       """
@@ -53,17 +83,37 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:56
-    def getRestaurantNearByRests: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.RestaurantController.getRestaurantNearByRests",
+    // @LINE:57
+    def getRestaurantByLowPrice: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RestaurantController.getRestaurantByLowPrice",
       """
         function() {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "rests/nearbyrests"})
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "rests/getbylow"})
         }
       """
     )
   
-    // @LINE:48
+    // @LINE:65
+    def getByPopularNearBy: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RestaurantController.getByPopularNearBy",
+      """
+        function(lat0,lon1,dist2) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "rests/pnearby/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("lat", encodeURIComponent(lat0)) + _qS([(""" + implicitly[QueryStringBindable[String]].javascriptUnbind + """)("lon", lon1), (""" + implicitly[QueryStringBindable[Integer]].javascriptUnbind + """)("dist", dist2)])})
+        }
+      """
+    )
+  
+    // @LINE:51
+    def getByCuisines: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RestaurantController.getByCuisines",
+      """
+        function(cuisine0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "rests/getbycuisine/" + (""" + implicitly[PathBindable[String]].javascriptUnbind + """)("cuisine", encodeURIComponent(cuisine0))})
+        }
+      """
+    )
+  
+    // @LINE:49
     def getRestaurantByName: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getRestaurantByName",
       """
@@ -73,7 +123,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:58
+    // @LINE:73
     def createRestaurant: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.createRestaurant",
       """
@@ -83,7 +133,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:44
+    // @LINE:43
     def getAllRestaurants: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getAllRestaurants",
       """
@@ -93,7 +143,17 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:46
+    // @LINE:69
+    def getByPopular: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RestaurantController.getByPopular",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "rests/popular"})
+        }
+      """
+    )
+  
+    // @LINE:45
     def getByStreetName: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.getByStreetName",
       """
@@ -103,7 +163,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:64
+    // @LINE:79
     def updateRestaurant: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.updateRestaurant",
       """
@@ -113,7 +173,17 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:62
+    // @LINE:61
+    def getRestaurantByHighPrice: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.RestaurantController.getRestaurantByHighPrice",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "rests/getbyhigh"})
+        }
+      """
+    )
+  
+    // @LINE:77
     def deleteRestaurantById: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.RestaurantController.deleteRestaurantById",
       """
@@ -139,6 +209,46 @@ package controllers.javascript {
       """
         function(file1) {
           return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "assets/" + (""" + implicitly[PathBindable[Asset]].javascriptUnbind + """)("file", file1)})
+        }
+      """
+    )
+  
+  }
+
+  // @LINE:97
+  class ReverseSuggestionBox(_prefix: => String) {
+
+    def _defaultPrefix: String = {
+      if (_prefix.endsWith("/")) "" else "/"
+    }
+
+  
+    // @LINE:99
+    def createSuggestion: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.SuggestionBox.createSuggestion",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "suggest"})
+        }
+      """
+    )
+  
+    // @LINE:101
+    def deleteSuggestionById: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.SuggestionBox.deleteSuggestionById",
+      """
+        function(id0) {
+          return _wA({method:"DELETE", url:"""" + _prefix + { _defaultPrefix } + """" + "suggestdel/" + (""" + implicitly[PathBindable[Integer]].javascriptUnbind + """)("id", id0)})
+        }
+      """
+    )
+  
+    // @LINE:97
+    def getAllSuggestions: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.SuggestionBox.getAllSuggestions",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "suggest"})
         }
       """
     )
@@ -225,7 +335,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:71
+  // @LINE:88
   class ReverseImageController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -233,7 +343,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:73
+    // @LINE:90
     def downloadImage: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ImageController.downloadImage",
       """
@@ -243,7 +353,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:75
+    // @LINE:92
     def deleteImage: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ImageController.deleteImage",
       """
@@ -253,7 +363,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:71
+    // @LINE:88
     def uploadImage: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ImageController.uploadImage",
       """
